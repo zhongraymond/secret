@@ -1,0 +1,60 @@
+<h2><%= @user.name %></h2> <a href="/users/<%=@user.id%>/edit">Edit Profile<a>
+  <form action="/secrets/" method="post">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  </br>
+<label for="secret[content]">New Secret</label></br>
+<textarea rows="4" cols="30" name="secret[content]"></textarea></br>
+<input style="margin-left:120px;"type="submit" value="Create Secret"/>
+</form>
+</br>
+
+  <table style="float:left; margin-right:50px">
+  <tr>
+  <td style="width:150px; text-align: left; font-weight: bold">Secrets</td>
+  <td style="text-align: left"></td>
+  </tr>
+  <tr>
+  <td></td>
+  <td></td>
+  </tr>
+  <tr><% @secrets.each do |secret| %>
+    <td style="text-align: left"><%=secret.content%></td>
+    <td style="text-align: left"></td>
+  </tr>
+  <tr>
+    <td style="text-align: left"><%= secret.likes.count %> likes</td>
+    <td style="text-align: left">
+      <form action="/secrets/<%= secret.id %>/" method="post">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden" />
+      <input type="hidden" name="_method" value="delete"> <button type="submit">Delete</button>
+    </form></td>
+  </tr>
+  <tr><td></td>
+  </tr><% end %>
+  </table>
+
+  <table style="float:left; margin-right:50px">
+    <tr>
+    <td style="text-align: left; font-weight: bold">Secrets Liked</td>
+    </tr>
+    <tr><% @secretsL.each do |secret| %>
+      <tr>
+      <td></td>
+      <td></td>
+      </tr>
+      <td style="text-align: left"><%=secret.content%></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><%= secret.users_liked.count %> likes</td>
+    </tr>
+    <tr><td></td>
+    </tr><% end %>
+
+    </table>
+</div>
+<!-- <form action="/sessions" method="post" role="form">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <input name="_method" value="delete" type="hidden">
+<button type="submit" class="btn btn-default">Log Out</button>
+</form> -->
+</body>
